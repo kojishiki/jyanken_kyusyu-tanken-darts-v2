@@ -36,11 +36,48 @@
     <p>今回のチャレンジ</p>
     <h3 id="mission"></h3>
     
+    <!-- 子ども・ペット同伴情報 -->
+     <div class="companion-info">
+      <p id="kids-info"></p>
+      <p id="kids-note"></p>
+      <p id="pets-info"></p>
+      <p id="pets-note"></p>
+    </div>
+    <!-- ここまで -->
+    
     <a id="map-link" href="#" target="_blank" rel="noopener noreferrer" hidden>
       📍 Googleマップで場所を見る
     
     </a>
   </div>
+
+
+<!-- 探検条件の選択 -->
+<div class="filter-area" id="filter-area">
+  <h2>🎯 どんな気分？</h2>
+
+  <select id="mood">
+    <option value="random">すべて運命に任せる！</option>
+    <option value="exciting">ワクワク・楽しみたい</option>
+    <option value="moving">感動・癒やされたい</option>
+    <option value="active">体を動かしたい</option>
+    <option value="learning">歴史・文化を学びたい</option>
+  </select>
+
+  <h2>👨‍👩‍👧‍👦 誰と行く？</h2>
+
+  <label>
+    <input type="checkbox" id="with-kids">
+    子ども連れ
+  </label>
+
+  <label>
+    <input type="checkbox" id="with-pets">
+    ペット連れ
+  </label>
+</div>
+
+
 
   <div class="button-area">
     <button id="draw">🎯 運命のダーツを投げる!!</button>
