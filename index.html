@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>九州たんけんダーツ</title>
+
+  <!-- CSSを読み込む -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="header">
+    <h1>九州たんけんダーツ</h1>
+    <p>まだ知らない九州に出会おう。</p>
+    <p>ダーツが導く運命の探検。</p>
+  </div>
+  
+  <!-- ここから新しく追加 -->
+  <div class="dart-area">
+  <img class="dart" src="images/dart.png" alt="ダーツ">
+  </div>
+  <!-- ここまで -->
+
+  <div class="result" id="result" hidden>
+    <p>運命の探検先は...！</p>
+    <h2 id="place"></h2>
+
+    <div class="photo-grid">
+      <img id="photo" alt="探検先のメイン写真">
+      <img id="photo2" alt="見どころの写真">
+      <img id="photo3" alt="周辺スポットの写真">
+      <img id="photo4" alt="ご当地グルメの写真">
+    </div>
+
+    <p>今回のチャレンジ</p>
+    <h3 id="mission"></h3>
+    
+    <a id="map-link" href="#" target="_blank" rel="noopener noreferrer" hidden>
+      📍 Googleマップで場所を見る
+    
+    </a>
+  </div>
+
+  <div class="button-area">
+    <button id="draw">🎯 運命のダーツを投げる!!</button>
+  </div>
+  
+  <!-- JavaScriptを読み込む -->
+  <script src="script.js"></script>
+
+</body>
+</html>
