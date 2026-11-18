@@ -109,13 +109,193 @@ const candidates = places.filter(function(place) {
   const number = Math.floor(random);
   const selectedPlace = candidates[number];
 
+  // 選ばれた観光地の詳細情報を表示する
+  showPlaceDetail(selectedPlace);
 
-//探索先とミッションを表示
-document.getElementById("place").textContent = selectedPlace.name;
-document.getElementById("mission").textContent = selectedPlace.mission;
+// ダーツから開いた場合は、行きたいリストへの戻るボタンを隠す
+document.getElementById("back-to-want-list").hidden = true;
 
 
-  // 子ども・ペット同伴情報を表示
+});
+
+
+// ダーツのアニメーションが終わったときの処理
+dart.addEventListener("animationend", function() {
+
+  dart.classList.remove("flying");
+  dartarea.hidden = true;
+
+  // 結果を表示する
+  document.getElementById("result").hidden = false;
+
+  // ダーツボタンを再び使えるようにする
+  button.disabled = false;
+  button.textContent = "🎯 別の探検先を探す！";
+
+});
+
+
+
+
+
+// 行きたい場所リストを画面に表示する
+function showWantToGoList() {
+
+  // 保存済みの場所を取得する
+  const savedPlaces = JSON.parse(localStorage.getItem("wantToGo")) || [];
+
+  // HTMLのリストを取得する
+  const list = document.getElementById("want-to-go-list");
+
+  // 一度リストの中身を空にする
+  list.innerHTML = "";
+
+  // 保存した場所を1件ずつ表示する
+  savedPlaces.forEach(function(placeName) {
+
+    const li = document.createElement("li");
+   
+// 観光地の詳細を開くボタンを作る
+const placeButton = document.createElement("button");
+
+placeButton.type = "button";
+placeButton.textContent = "📍 " + placeName;
+
+// ボタンが押されたときの処理
+
+placeButton.addEventListener("click", function() {
+
+  // 保存した名前と一致する観光地を探す
+  const selectedPlace = places.find(function(place) {
+    return place.name === placeName;
+  });
+
+  // 観光地が見つかった場合
+  if (selectedPlace) {
+
+    // 共通関数を呼び出す
+    showPlaceDetail(selectedPlace);
+
+    // 行きたいリストを隠す
+    wantToGoArea.hidden = true;
+
+    // 詳細画面を表示する
+    document.getElementById("result").hidden = false;
+
+// 行きたいリストへの戻るボタンを表示
+document.getElementById("back-to-want-list").hidden = false;
+
+  }
+
+});
+
+// リストの中にボタンを追加
+li.appendChild(placeButton);
+
+    list.appendChild(li);
+
+  });
+}
+
+// ページを開いたときにリストを表示する
+showWantToGoList();
+
+
+// 行きたいリストの画面切り替え
+const openWantListButton = document.getElementById("open-want-list");
+const backToDartsButton = document.getElementById("back-to-darts");
+const wantToGoArea = document.getElementById("want-to-go-area");
+
+// 行きたいリストを開く
+openWantListButton.addEventListener("click", function() {
+
+  // ダーツ画面の各エリアを隠す
+  document.querySelector(".header").hidden = true;
+  document.getElementById("result").hidden = true;
+  document.getElementById("filter-area").hidden = true;
+  document.querySelector(".button-area").hidden = true;
+
+  // リストを開くボタンを隠す
+  openWantListButton.hidden = true;
+
+  // ダーツの画像エリアを隠す
+  dartarea.hidden = true;
+
+  // 行きたいリストを表示する
+  wantToGoArea.hidden = false;
+  showWantToGoList();
+
+});
+
+
+// ダーツ画面に戻る
+backToDartsButton.addEventListener("click", function() {
+
+  // 行きたいリストを隠す
+  wantToGoArea.hidden = true;
+
+  // ダーツ画面を表示する
+  document.querySelector(".header").hidden = false;
+  document.querySelector(".button-area").hidden = false;
+  openWantListButton.hidden = false;
+
+  // 条件選択画面に戻す
+  document.getElementById("filter-area").hidden = false;
+  document.getElementById("result").hidden = true;
+
+  // ダーツの画像エリアを隠した状態に戻す
+  dartarea.hidden = true;
+
+  // ダーツボタンの文字を戻す
+  button.textContent = "🎯 ダーツを投げる！";
+
+});
+
+
+
+
+// 行きたい場所を保存するボタンを取得
+const savePlaceButton = document.getElementById("save-place");
+
+// 保存ボタンが押されたときの処理
+savePlaceButton.addEventListener("click", function() {
+
+  // 表示中の観光地の名前を取得
+  const placeName = document.getElementById("place").textContent;
+
+  // 保存済みの場所を取得
+  const savedPlaces = JSON.parse(localStorage.getItem("wantToGo")) || [];
+
+  // まだ保存されていない場合
+  if (!savedPlaces.includes(placeName)) {
+
+    // リストに追加
+    savedPlaces.push(placeName);
+
+    // ブラウザに保存
+    localStorage.setItem("wantToGo", JSON.stringify(savedPlaces));
+
+    // 行きたいリストを更新
+    showWantToGoList();
+
+    alert(placeName + " を行きたい場所に追加したよ！");
+
+  } else {
+
+    alert("この場所はすでに登録されているよ！");
+
+  }
+
+});
+
+// 観光地の詳細情報を表示する共通関数
+function showPlaceDetail(place) {
+
+  // 観光地の名前とミッション
+  document.getElementById("place").textContent = place.name;
+  document.getElementById("mission").textContent = place.mission;
+
+  // 同行条件の表示用ラベル
   const statusLabels = {
     ok: "同伴OK",
     ng: "同伴NG",
@@ -123,49 +303,47 @@ document.getElementById("mission").textContent = selectedPlace.mission;
     unknown: "要確認"
   };
 
+  // 子ども・ペットの情報
   document.getElementById("kids-info").textContent =
-    "👨‍👩‍👧 子ども連れ：" + statusLabels[selectedPlace.kids];
+    "👨‍👩‍👧 子ども連れ：" + statusLabels[place.kids];
 
-  document.getElementById("kids-note").textContent =
-    selectedPlace.kidNote;
+  document.getElementById("kids-note").textContent = place.kidNote;
 
   document.getElementById("pets-info").textContent =
-    "🐶 ペット連れ：" + statusLabels[selectedPlace.pets];
+    "🐶 ペット連れ：" + statusLabels[place.pets];
 
-  document.getElementById("pets-note").textContent =
-    selectedPlace.petNote;
+  document.getElementById("pets-note").textContent = place.petNote;
 
+  // 写真
+  document.getElementById("photo").src = place.image;
+  document.getElementById("photo2").src = place.extras[0];
 
+  // Googleマップ
+  const maplink = document.getElementById("map-link");
 
-//写真を表示
-const images = [
-  selectedPlace.image,
-  selectedPlace.extras[0]
-];
+  maplink.href =
+    "https://www.google.com/maps/search/?api=1&query=" +
+    encodeURIComponent(place.name);
 
-const photoIds = ["photo", "photo2"];
+  maplink.hidden = false;
+}
 
-photoIds.forEach(function(id, i) {
-  const photo = document.getElementById(id);
-  photo.src = images[i];
-});
+// 行きたいリストに戻るボタンを取得
+const backToWantListButton = document.getElementById("back-to-want-list");
 
+// 戻るボタンを押したときの処理
+backToWantListButton.addEventListener("click", function() {
 
-//Googleマップのリンクを表示
-const maplink =document.getElementById("map-link");
-maplink.href = 
-"https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(selectedPlace.name);
-maplink.hidden = false;
-});
+  // 観光地の詳細画面を隠す
+  document.getElementById("result").hidden = true;
 
-dart.addEventListener("animationend", function() {
+  // 戻るボタンを隠す
+  backToWantListButton.hidden = true;
 
-  dart.classList.remove("flying");
-  dartarea.hidden = true;
+  // 行きたいリストを表示する
+  wantToGoArea.hidden = false;
 
-  document.getElementById("result").hidden = false;
-
-  button.disabled = false;
-  button.textContent = "🎯　別の探検先を探す！";
+  // 保存済みの場所を一覧に表示する
+  showWantToGoList();
 
 });
