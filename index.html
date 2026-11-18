@@ -49,6 +49,16 @@
       📍 Googleマップで場所を見る
     
     </a>
+    <!-- 行きたい場所を保存するボタン -->
+     <button id="save-place" type="button">
+      ❤️ ここに行く！
+    </button>
+
+    <!-- 行きたいリストに戻るボタン -->
+<button id="back-to-want-list" type="button" hidden>
+  ← 行きたいリストに戻る
+</button>
+
   </div>
 
 
@@ -78,11 +88,27 @@
 </div>
 
 
-
   <div class="button-area">
     <button id="draw">🎯 運命のダーツを投げる!!</button>
   </div>
-  
+
+<!-- 行きたいリストを開くボタン -->
+<button id="open-want-list" type="button">
+  ❤️ 行きたいリストを見る
+</button>
+
+<!-- 行きたいリスト専用画面 -->
+<section id="want-to-go-area" hidden>
+  <h2>❤️ 行きたいリスト</h2>
+
+  <ul id="want-to-go-list"></ul>
+
+  <button id="back-to-darts" type="button">
+    ← ダーツに戻る
+  </button>
+</section>
+
+
   <!-- JavaScriptを読み込む -->
   <script src="script.js"></script>
 

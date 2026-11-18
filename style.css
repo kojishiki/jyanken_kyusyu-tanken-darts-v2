@@ -245,3 +245,36 @@ body {
   font-size: 14px;
   color: #666;
 }
+
+
+/* 行きたいリスト全体 */
+#want-to-go-area {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff7e9;
+  border-radius: 20px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* リストの見出し */
+#want-to-go-area h2 {
+  margin-bottom: 15px;
+}
+
+/* 保存した場所の一覧 */
+#want-to-go-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 保存した場所1件ずつ */
+#want-to-go-list li {
+  padding: 10px;
+  margin-bottom: 8px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  text-align: left;
+}
